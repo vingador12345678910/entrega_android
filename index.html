@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Livros</title>
+</head>
+<body>
+    <h1>Lista de Livros</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+            </tr>
+        </thead>
+        <tbody id="livros">
+        </tbody>
+    </table>
+
+    <script>
+        function carregarLivros() {
+            fetch('/livro')
+                .then(response => response.json())
+                .then(livros => {
+                    const tabelaLivros = document.getElementById('livros');
+                    livros.forEach(livro => {
+                        const tr = document.createElement('tr');
+                        const tdId = document.createElement('td');
+                        const tdTitulo = document.createElement('td');
+                        const tdAutor = document.createElement('td');
+                        tdId.textContent = livro.id;
+                        tdTitulo.textContent = livro.titulo;
+                        tdAutor.textContent = livro.autor;
+                        tr.appendChild(tdId);
+                        tr.appendChild(tdTitulo);
+                        tr.appendChild(tdAutor);
+                        tabelaLivros.appendChild(tr);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+        carregarLivros();
+    </script>
+</body>
+</html>
